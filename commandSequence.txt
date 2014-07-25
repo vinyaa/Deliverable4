@@ -1,0 +1,3 @@
+./test.py "internet explorer" VISTA
+./test.py chrome VISTA
+./test.py firefox VISTA
