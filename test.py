@@ -2,9 +2,14 @@
 from selenium import webdriver
 import unittest
 import sys
+import nose
 
 testcenter_url = 'http://testcenter.duolingo.com/'
 languages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
+
+#args = sys.argv[1:]
+#sys.argv = sys.argv[0:1]
+
 
 def test_page_title():
     for language in languages:
@@ -17,7 +22,9 @@ def check_page_title(language, testcenter_url, title):
 class CheckFrontPage(unittest.TestCase):
 
     # Default browser capabilities
-    capabilities = { "browserName": "chrome", "platform": "VISTA" }
+    #capabilities = { "browserName": "chrome", "platform": "VISTA" }
+    #capabilities = { "browserName": "internet explorer", "platform": "WIN8_1" }
+    capabilities = { "browserName": "firefox", "platform": "VISTA" }
 
     def setUp(self):
         self.driver = webdriver.Remote(desired_capabilities=self.capabilities)
@@ -48,7 +55,10 @@ if __name__ == "__main__":
       "platform": sys.argv[2],
     }
 
+    print "JUST A TEST"
+
     # The unit testing framework takes over the command line arguments, so removing ours to no cause trouble
     del sys.argv[1:]
 
-    unittest.main(verbosity=1)
+    #unittest.main(verbosity=1)
+    nose.runmodule(argv=[__file__, '-v'])

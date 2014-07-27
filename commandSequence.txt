@@ -1,3 +1,7 @@
 ./test.py "internet explorer" VISTA
 ./test.py chrome VISTA
 ./test.py firefox VISTA
+./test.py "internet explorer" WIN8
+./test.py chrome WIN8
+./test.py firefox WIN8
+./test.py safari MAC
