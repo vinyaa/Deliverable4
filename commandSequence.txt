@@ -5,3 +5,5 @@
 ./test.py chrome WIN8
 ./test.py firefox WIN8
 ./test.py safari MAC
+./test.py firefox MAC
+./test.py chrome MAC

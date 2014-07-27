@@ -1,0 +1,13 @@
+300000ms instead of 30000ms timeout documented in seconds
+
+How to use the safari plugin is confusing -- not autodetected
+
+VISTA instead of WINDOWS7
+
+No IE11 support for WIN 8.1
+
+Timing
+
+Resources:
+https://code.google.com/p/selenium/wiki/Grid2
+http://chromedriver.storage.googleapis.com/index.html
