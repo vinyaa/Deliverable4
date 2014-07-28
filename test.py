@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from selenium import webdriver
 import unittest
 import sys
@@ -20,25 +22,30 @@ def setUpModule():
     global driver
     driver = webdriver.Remote(desired_capabilities=capabilities)
 
+# Make sure that the page title is the same for each language.
+# This not only makes branding consistent, but is also a sanity
+# check that a page renders for every language.
 def check_page_title(language, testcenter_url, title):
     driver.get(testcenter_url + language)
-    assert (driver.title == "Duolingo Test Center")
+    assert (driver.title == title)
 
+# Generate an individual page title test for each language
 def test_page_title():
     for language in languages:
         yield check_page_title, language, testcenter_url, "Duolingo Test Center"
 
-# Check the welcome text for each language as a sanity check to make sure the page is internationalized for the particular
-#def test_page_welcome(self):
-#    languages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
-#    messages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
-#    for (language, message) in (languages, messages):
-#        self.driver.get(testcenter_url + language)
+# Make sure that the primary action button is translated properly for the top 3 language markets
+def test_action_button_translation():
+    topLanguages = languages[0:3]
+    messages = ("Try it while it's free", "Inténtelo mientras es gratis", "Essaie pendant que c'est gratuit")
+    for topLanguage, message in zip(topLanguages, messages):
+        yield check_action_button_translation, topLanguage, testcenter_url, message
 
-#def test_example2(self):
-#    self.driver.get("http://www.google.com")
-#    self.assertEqual(self.driver.title, "Google")
-
+def check_action_button_translation(language, testcenter_url, message):
+    driver.get(testcenter_url + language)
+    buttonText = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[1]/div[1]/div/div').text.encode('utf8')
+    assert (buttonText == message)
+ 
 def tearDownModule():
     driver.quit()
 
@@ -50,5 +57,4 @@ if __name__ == "__main__":
     # The unit testing framework takes over the command line arguments, so removing ours to no cause trouble
     del sys.argv[1:]
 
-    #unittest.main(verbosity=1)
     nose.runmodule(argv=[__file__, '-v'])

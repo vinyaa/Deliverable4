@@ -8,6 +8,11 @@ No IE11 support for WIN 8.1
 
 Timing
 
+subTests were only supported in Python 3, so nose was used instead of the traditional unittest module
+
 Resources:
 https://code.google.com/p/selenium/wiki/Grid2
 http://chromedriver.storage.googleapis.com/index.html
+https://code.google.com/p/selenium/wiki/SafariDriver
+http://nose.readthedocs.org/en/latest/usage.html
+http://chromedriver.storage.googleapis.com/index.html?path=2.10/
