@@ -21,6 +21,7 @@ capabilities = {
 def setUpModule():
     global driver
     driver = webdriver.Remote(desired_capabilities=capabilities)
+    driver.implicitly_wait(10)
 
 # Make sure that the page title is the same for each language.
 # This not only makes branding consistent, but is also a sanity
@@ -42,14 +43,12 @@ def test_action_button_translation():
         yield check_action_button_translation, topLanguage, testcenter_url, message
 
 def check_action_button_translation(language, testcenter_url, message):
-    driver.implicitly_wait(10)
     driver.get(testcenter_url + language)
     buttonText = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[1]/div[1]/div/div').text.encode('utf8')
     assert (buttonText == message)
 
 # Make sure that the users are taken to the Google play page and are presented the installation for the Testcenter app
 def test_android_download_link():
-    driver.implicitly_wait(10)
     driver.get(testcenter_url + 'en')
     androidLink = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[1]/div[1]/div/ul/li[1]/a').get_attribute('href')
     driver.get(androidLink)
