@@ -10,6 +10,10 @@ Timing
 
 subTests were only supported in Python 3, so nose was used instead of the traditional unittest module
 
+MoveTo action doesn't work in safari -- bug -- need to use javascript:
+https://code.google.com/p/selenium/issues/detail?id=5793
+https://code.google.com/p/selenium/issues/detail?id=4136 -- "Safari is not a priority!"
+
 Resources:
 https://code.google.com/p/selenium/wiki/Grid2
 http://chromedriver.storage.googleapis.com/index.html

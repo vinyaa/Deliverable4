@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from nose.plugins.skip import Skip, SkipTest
 import unittest
 import sys
 import nose
@@ -48,13 +53,40 @@ def check_action_button_translation(language, testcenter_url, message):
     assert (buttonText == message)
 
 # Make sure that the users are taken to the Google play page and are presented the installation for the Testcenter app
-def test_android_download_link():
+def test_android_app_link():
     driver.get(testcenter_url + 'en')
     androidLink = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[1]/div[1]/div/ul/li[1]/a').get_attribute('href')
     driver.get(androidLink)
     installButton = driver.find_element_by_xpath('//*[@id="body-content"]/div[1]/div[1]/div[2]/div[4]/span/button/span[2]').text
     assert (installButton == "Install")
- 
+
+def test_chrome_app_link():
+
+    # The testing framework does not yet support the move_to_element method
+    if driver.capabilities['browserName'] == 'safari':
+        raise SkipTest
+
+    driver.get(testcenter_url + 'en')
+    button = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[1]/div[1]/div/div')
+    hoverButton = ActionChains(driver).move_to_element(button)
+    hoverButton.perform()
+    loginBox = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[2]/p')
+    chromeLink = driver.find_element_by_css_selector('.start-chrome').click()
+
+    # Users are redirected to a user creation page if they are not currently logged in when using Chrome
+    # If they are using other browsers, they are redirected to a Chrome download page
+    if driver.capabilities['browserName'] == 'chrome':
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of(loginBox))
+        loginText = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[2]/p').text.strip()
+        assert (loginText == "You need a Duolingo account to save your test results.")
+    else:
+        try:
+            elem = driver.find_element_by_xpath("//*[contains(.,'Download Chrome')]")
+            assert True
+        except:
+            assert False
+
 def tearDownModule():
     driver.quit()
 
