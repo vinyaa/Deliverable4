@@ -95,6 +95,17 @@ def test_chrome_app_link():
         except:
             assert False
 
+# Make sure that the "Support" link at the bottom of the page pops up a user help form
+def test_support_link():
+    driver.get(testcenter_url + 'en')
+    driver.find_element_by_xpath('//div[@id="app"]/footer/ul/li[6]/a').click()
+    try:
+        # The help form contains a subject field
+        driver.find_element_by_id('dropbox_submit')
+        assert True
+    except:
+        assert False
+
 # Make sure the user gets an error message when trying to login with an invalid user account
 def testInvalidLogin():
     driver.get(testcenter_url + 'en')
@@ -164,6 +175,8 @@ def testLogout():
         assert (expectedText == "Certify your language proficiency")
     except:
         assert False
+
+
 
 def tearDownModule():
     driver.quit()
