@@ -14,6 +14,8 @@ import time
 
 testcenter_url = 'http://testcenter.duolingo.com/'
 languages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
+loginID = ""
+loginPass = ""
 
 browserName = sys.argv[1]
 systemPlatform = sys.argv[2]
@@ -114,6 +116,21 @@ def testForgotPassword():
     try:
         driver.find_element_by_id('email')
         assert True
+    except:
+        assert False
+
+def testValidLogin():
+    driver.get(testcenter_url + 'en')
+    driver.find_element_by_id('sign-in-btn').click()
+    usernameForm = driver.find_element_by_id('top_login')
+    usernameForm.send_keys(loginID)
+    passwordForm = driver.find_element_by_id('top_password')
+    passwordForm.send_keys(loginPass)
+    driver.find_element_by_id('login-button').click()
+    try:
+        # Find the user's name in the top right corner of the page to indicate that the login was successful
+        username = driver.find_element_by_class_name('name').text.strip().lower()
+        assert (username == loginID.lower())
     except:
         assert False
 
