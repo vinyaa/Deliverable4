@@ -95,17 +95,6 @@ def test_chrome_app_link():
         except:
             assert False
 
-# Make sure that the "Support" link at the bottom of the page pops up a user help form
-def test_support_link():
-    driver.get(testcenter_url + 'en')
-    driver.find_element_by_xpath('//div[@id="app"]/footer/ul/li[6]/a').click()
-    try:
-        # The help form contains a subject field
-        driver.find_element_by_id('dropbox_submit')
-        assert True
-    except:
-        assert False
-
 # Make sure the user gets an error message when trying to login with an invalid user account
 def testInvalidLogin():
     driver.get(testcenter_url + 'en')
@@ -146,7 +135,7 @@ def testValidLogin():
         assert False
 
 # Make sure that the sample test option is available to authenticated Chrome users
-def testChromeSampleTestVisible():
+def test_chrome_sample_test_visible():
     # This feature only works for the Chrome browser
     if (driver.capabilities['browserName'] != "chrome"):
         raise SkipTest
@@ -154,6 +143,19 @@ def testChromeSampleTestVisible():
     try:
         # Make sure the sample test option is available for a Chrome user
         driver.find_element_by_class_name('sample-questions')
+        assert True
+    except:
+        assert False
+
+# Make sure that the certified test option is available to authenticated Chrome users
+def test_chrome_certified_test_visible():
+    # This feature only works for the Chrome browser
+    if (driver.capabilities['browserName'] != "chrome"):
+        raise SkipTest
+
+    try:
+        # Make sure the certified test option is available for a Chrome user
+        driver.find_element_by_class_name('certified-exam')
         assert True
     except:
         assert False
