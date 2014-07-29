@@ -66,7 +66,7 @@ def test_android_app_link():
 
 def test_chrome_app_link():
 
-    # The web driver for Safari does not yet support the move_to_element method
+    # The web driver for Safari does not yet support the move_to_element method so this test will not function properly
     if (driver.capabilities['browserName'] == "safari"):
         raise SkipTest
 
@@ -131,6 +131,37 @@ def testValidLogin():
         # Find the user's name in the top right corner of the page to indicate that the login was successful
         username = driver.find_element_by_class_name('name').text.strip().lower()
         assert (username == loginID.lower())
+    except:
+        assert False
+
+# Make sure that the sample test option is available to authenticated Chrome users
+def testChromeSampleTestVisible():
+    # This feature only works for the Chrome browser
+    if (driver.capabilities['browserName'] != "chrome"):
+        raise SkipTest
+
+    try:
+        # Make sure the sample test option is available for a Chrome user
+        driver.find_element_by_class_name('sample-questions')
+        assert True
+    except:
+        assert False
+
+# Make sure a user can properly logout of Testcenter by hovering over his/her username
+# The user should be taken back to the Testcenter front page
+def testLogout():
+    # The web driver for Safari does not yet support the move_to_element method so this test will not function properly
+    if (driver.capabilities['browserName'] == "safari"):
+        raise SkipTest
+
+    username = driver.find_element_by_class_name('name')
+    hoverButton = ActionChains(driver).move_to_element(username)
+    hoverButton.perform()
+    logoutButton = driver.find_element_by_id("header_userdrop_logout").click()
+    # Look for text that is expected to be on the front page
+    try:
+        expectedText = driver.find_element_by_xpath('//*[@id="app"]/section[1]/div[1]/div[1]/div[1]/h1').text.strip()
+        assert (expectedText == "Certify your language proficiency")
     except:
         assert False
 
