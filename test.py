@@ -26,7 +26,7 @@ capabilities = {
 }
 
 # Setup a browser session for the chosen OS/browser combination
-def setUpModule():
+def setup_module():
     global driver
     driver = webdriver.Remote(desired_capabilities=capabilities)
     driver.implicitly_wait(30)
@@ -96,7 +96,7 @@ def test_chrome_app_link():
             assert False
 
 # Make sure the user gets an error message when trying to login with an invalid user account
-def testInvalidLogin():
+def test_invalid_login():
     driver.get(testcenter_url + 'en')
     driver.find_element_by_id('sign-in-btn').click()
     usernameForm = driver.find_element_by_id('top_login')
@@ -107,7 +107,7 @@ def testInvalidLogin():
     errorText = driver.find_element_by_xpath('/html/body/div[3]/div/div/p').text.strip()
     assert (errorText == "ERROR: Failed login")
 
-def testForgotPassword():
+def test_forgotten_password():
     driver.get(testcenter_url + 'en')
     driver.find_element_by_id('sign-in-btn').click()
     driver.find_element_by_xpath('//*[@id="login-form"]/li[8]/a').click()
@@ -119,7 +119,7 @@ def testForgotPassword():
     except:
         assert False
 
-def testValidLogin():
+def test_valid_login():
     driver.get(testcenter_url + 'en')
     driver.find_element_by_id('sign-in-btn').click()
     usernameForm = driver.find_element_by_id('top_login')
@@ -162,7 +162,7 @@ def test_chrome_certified_test_visible():
 
 # Make sure a user can properly logout of Testcenter by hovering over his/her username
 # The user should be taken back to the Testcenter front page
-def testLogout():
+def test_logout():
     # The web driver for Safari does not yet support the move_to_element method so this test will not function properly
     if (driver.capabilities['browserName'] == "safari"):
         raise SkipTest
@@ -178,9 +178,7 @@ def testLogout():
     except:
         assert False
 
-
-
-def tearDownModule():
+def teardown_module():
     driver.quit()
 
 if __name__ == "__main__":
