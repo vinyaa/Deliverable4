@@ -102,9 +102,20 @@ def testInvalidLogin():
     passwordForm = driver.find_element_by_id('top_password')
     passwordForm.send_keys("alskdjlksjdlffei392j32hfdsdf2kd")
     driver.find_element_by_id('login-button').click()
-
     errorText = driver.find_element_by_xpath('/html/body/div[3]/div/div/p').text.strip()
     assert (errorText == "ERROR: Failed login")
+
+def testForgotPassword():
+    driver.get(testcenter_url + 'en')
+    driver.find_element_by_id('sign-in-btn').click()
+    driver.find_element_by_xpath('//*[@id="login-form"]/li[8]/a').click()
+
+    # Make sure the user is redirected to the reset password page where they can type in their e-mail address
+    try:
+        driver.find_element_by_id('email')
+        assert True
+    except:
+        assert False
 
 def tearDownModule():
     driver.quit()
