@@ -28,6 +28,7 @@ def setUpModule():
     global driver
     driver = webdriver.Remote(desired_capabilities=capabilities)
     driver.implicitly_wait(30)
+    driver.maximize_window()
 
 # Make sure that the page title is the same for each language.
 # This not only makes branding consistent, but is also a sanity
@@ -63,9 +64,8 @@ def test_android_app_link():
 
 def test_chrome_app_link():
 
-    # The web driver for Safari does not yet support the move_to_element method and there is currently
-    # a visibility bug in the firefox driver, so this feature cannot be effectively tested on these browsers
-    if (driver.capabilities['browserName'] == "safari" or (driver.capabilities['browserName'] == "firefox")):
+    # The web driver for Safari does not yet support the move_to_element method
+    if (driver.capabilities['browserName'] == "safari"):
         raise SkipTest
 
     driver.get(testcenter_url + 'en')
@@ -92,6 +92,19 @@ def test_chrome_app_link():
             assert True
         except:
             assert False
+
+# Make sure the user gets an error message when trying to login with an invalid user account
+def testInvalidLogin():
+    driver.get(testcenter_url + 'en')
+    driver.find_element_by_id('sign-in-btn').click()
+    usernameForm = driver.find_element_by_id('top_login')
+    usernameForm.send_keys("alskdjlksjdlffei392j32hf2kd")
+    passwordForm = driver.find_element_by_id('top_password')
+    passwordForm.send_keys("alskdjlksjdlffei392j32hfdsdf2kd")
+    driver.find_element_by_id('login-button').click()
+
+    errorText = driver.find_element_by_xpath('/html/body/div[3]/div/div/p').text.strip()
+    assert (errorText == "ERROR: Failed login")
 
 def tearDownModule():
     driver.quit()
