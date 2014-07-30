@@ -73,7 +73,7 @@ def test_speak_module(self):
         driver.find_element_by_class_name()
 
 # Test vocab module
-# Click the buttons that say [boax fine good easy bag walk both may], click submit button
+# Click the buttons that say [fine good easy bag walk both may], click submit button
 def test_vocab_module(self):
     #Advance to the right module
     driver.get(testcenter_url + "sample")
@@ -89,8 +89,12 @@ def test_vocab_module(self):
     submit = driver.find_element_by_xpath("//footer/button[1]")
     
     #Start test
-    vocab = ["boax", "fine", "good", "easy", "bag", "walk", "both", "may"]
-
+    vocab_buttons = driver.find_elements_by_class_name("btn")
+    vocab_options = ["fine", "good", "easy", "bag", "walk", "both", "may"]
+    for button in vocab_buttons:
+        my_text = button.innerHTML
+        if my_text in vocab_options:
+            button.click()
 
 # Test dropdown module
 # [has were was became swam] & submit -- class="step bg-certificate" heading2 should say "Sample questions complete!"
