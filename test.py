@@ -207,15 +207,7 @@ def test_listen_module():
 # Test speech module
 # Click record-button, wait 2 seconds, click stop-button, click class="btn right btn-lg btn-primary btn-submit btn-success"
 def test_speak_module():
-    # Advance to the right module
-    driver.get(testcenter_url + "sample")
-    start_button = driver.find_element_by_class_name("right")
-    start_button.click()
-    listening = driver.find_element_by_xpath("//div[@id ='challenge']/div[1]/div[2]/input[1]")
-    listening.send_keys("She is not old")
-    listening.send_keys(Keys.RETURN)
-    
-    # Start test
+    # Start recording voice
     mic = driver.find_element_by_id("record-button")
     mic.click()
     time.sleep(2)
@@ -229,6 +221,16 @@ def test_speak_module():
         assert True
     except:
         assert False
+
+# Test vocab module
+# Click the buttons that say [fine good easy bag walk both may], click submit button
+def test_vocab_module():
+    vocab_buttons = driver.find_elements_by_class_name("btn")
+    vocab_options = ["fine", "good", "easy", "bag", "walk", "both", "may"]
+    for button in vocab_buttons:
+        my_text = button.text.strip()
+        if my_text in vocab_options:
+            button.click()
 
 # Make sure a user can properly logout of Testcenter by hovering over his/her username
 # The user should be taken back to the Testcenter front page
