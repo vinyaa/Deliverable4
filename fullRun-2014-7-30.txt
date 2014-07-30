@@ -34,7 +34,7 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... SKIP
 
 ----------------------------------------------------------------------
-Ran 32 tests in 11.357s
+Ran 32 tests in 14.253s
 
 OK (SKIP=15)
 TESTING: firefox on MAC
@@ -73,7 +73,7 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 25.468s
+Ran 32 tests in 24.924s
 
 OK (SKIP=13)
 TESTING: chrome on MAC
@@ -112,7 +112,7 @@ __main__.test_quit_test ... ok
 __main__.test_logout ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 45.196s
+Ran 32 tests in 43.112s
 
 OK
 TESTING: firefox on VISTA
@@ -151,7 +151,7 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 66.647s
+Ran 32 tests in 62.955s
 
 OK (SKIP=13)
 TESTING: firefox on WIN8
@@ -190,7 +190,7 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 92.725s
+Ran 32 tests in 90.978s
 
 OK (SKIP=13)
 TESTING: chrome on VISTA
@@ -229,7 +229,7 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 118.819s
+Ran 32 tests in 123.041s
 
 OK (SKIP=13)
 TESTING: internet explorer on VISTA
@@ -248,7 +248,7 @@ __main__.test_action_button_translation('en', 'https://testcenter.duolingo.com/'
 __main__.test_action_button_translation('es', 'https://testcenter.duolingo.com/', 'Int\xc3\xa9ntelo mientras es gratis') ... FAIL
 __main__.test_action_button_translation('fr', 'https://testcenter.duolingo.com/', "Essaie pendant que c'est gratuit") ... FAIL
 __main__.test_android_app_link ... ok
-__main__.test_chrome_app_link ... ERROR
+__main__.test_chrome_app_link ... ok
 __main__.test_invalid_login ... ok
 __main__.test_forgotten_password ... ok
 __main__.test_valid_login ... ok
@@ -268,69 +268,6 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... ok
 
 ======================================================================
-ERROR: __main__.test_chrome_app_link
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/Users/max/infsci2955/deliverable4/env/lib/python2.7/site-packages/nose/case.py", line 197, in runTest
-    self.test(*self.arg)
-  File "./test.py", line 84, in test_chrome_app_link
-    chromeLink.click()
-  File "/Users/max/infsci2955/deliverable4/env/lib/python2.7/site-packages/selenium/webdriver/remote/webelement.py", line 60, in click
-    self._execute(Command.CLICK_ELEMENT)
-  File "/Users/max/infsci2955/deliverable4/env/lib/python2.7/site-packages/selenium/webdriver/remote/webelement.py", line 370, in _execute
-    return self._parent.execute(command, params)
-  File "/Users/max/infsci2955/deliverable4/env/lib/python2.7/site-packages/selenium/webdriver/remote/webdriver.py", line 173, in execute
-    self.error_handler.check_response(response)
-  File "/Users/max/infsci2955/deliverable4/env/lib/python2.7/site-packages/selenium/webdriver/remote/errorhandler.py", line 164, in check_response
-    raise exception_class(message, screen, stacktrace)
-ElementNotVisibleException: Message: u"Cannot click on element (WARNING: The server did not provide any stacktrace information)\nCommand duration or timeout: 97 milliseconds\nBuild info: version: '2.42.2', revision: '6a6995d', time: '2014-06-03 17:42:03'\nSystem info: host: 'IE9Win7', ip: '192.168.1.11', os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.7.0_65'\nSession ID: 1bbba696-246c-4ed5-a06b-cb73d0f7b6d0\nDriver info: org.openqa.selenium.ie.InternetExplorerDriver\nCapabilities [{platform=WINDOWS, javascriptEnabled=true, elementScrollBehavior=0, ignoreZoomSetting=false, enablePersistentHover=true, ie.ensureCleanSession=false, browserName=internet explorer, enableElementCacheCleanup=true, unexpectedAlertBehaviour=dismiss, version=9, ie.usePerProcessProxy=false, cssSelectorsEnabled=true, ignoreProtectedModeSettings=false, requireWindowFocus=false, handlesAlerts=true, initialBrowserUrl=http://localhost:29883/, ie.forceCreateProcessApi=false, nativeEvents=true, browserAttachTimeout=0, ie.browserCommandLineSwitches=, takesScreenshot=true}]" ; Screenshot: available via screen ; Stacktrace: 
-    at sun.reflect.NativeConstructorAccessorImpl.newInstance0 (None:-2)
-    at sun.reflect.NativeConstructorAccessorImpl.newInstance (None:-1)
-    at sun.reflect.DelegatingConstructorAccessorImpl.newInstance (None:-1)
-    at java.lang.reflect.Constructor.newInstance (None:-1)
-    at org.openqa.selenium.remote.ErrorHandler.createThrowable (ErrorHandler.java:204)
-    at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed (ErrorHandler.java:156)
-    at org.openqa.selenium.remote.RemoteWebDriver.execute (RemoteWebDriver.java:599)
-    at org.openqa.selenium.remote.RemoteWebElement.execute (RemoteWebElement.java:268)
-    at org.openqa.selenium.remote.RemoteWebElement.click (RemoteWebElement.java:79)
-    at sun.reflect.GeneratedMethodAccessor29.invoke (None:-1)
-    at sun.reflect.DelegatingMethodAccessorImpl.invoke (None:-1)
-    at java.lang.reflect.Method.invoke (None:-1)
-    at org.openqa.selenium.support.events.EventFiringWebDriver$EventFiringWebElement$1.invoke (EventFiringWebDriver.java:331)
-    at com.sun.proxy.$Proxy4.click (None:-1)
-    at org.openqa.selenium.support.events.EventFiringWebDriver$EventFiringWebElement.click (EventFiringWebDriver.java:344)
-    at sun.reflect.GeneratedMethodAccessor29.invoke (None:-1)
-    at sun.reflect.DelegatingMethodAccessorImpl.invoke (None:-1)
-    at java.lang.reflect.Method.invoke (None:-1)
-    at org.openqa.selenium.remote.server.KnownElements$1.invoke (KnownElements.java:63)
-    at com.sun.proxy.$Proxy5.click (None:-1)
-    at org.openqa.selenium.remote.server.handler.ClickElement.call (ClickElement.java:29)
-    at org.openqa.selenium.remote.server.handler.ClickElement.call (ClickElement.java:1)
-    at java.util.concurrent.FutureTask.run (None:-1)
-    at org.openqa.selenium.remote.server.DefaultSession$1.run (DefaultSession.java:169)
-    at java.util.concurrent.ThreadPoolExecutor.runWorker (None:-1)
-    at java.util.concurrent.ThreadPoolExecutor$Worker.run (None:-1)
-    at java.lang.Thread.run (None:-1) 
--------------------- >> begin captured logging << --------------------
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/url {"url": "https://testcenter.duolingo.com/en", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element {"using": "xpath", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "value": "//div[@id=\"app\"]/section[1]/div[1]/div[1]/div[1]/div/div"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/moveto {"sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "element": "5"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element {"using": "xpath", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "value": "//div[@id=\"app\"]/section[1]/div[1]/div[2]/p"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element {"using": "css selector", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "value": ".start-chrome"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: GET http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element/7/displayed {"sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "id": "7"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: GET http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element/7/displayed {"sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "id": "7"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element/7/click {"sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "id": "7"}
-selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
---------------------- >> end captured logging << ---------------------
-
-======================================================================
 FAIL: __main__.test_action_button_translation('es', 'https://testcenter.duolingo.com/', 'Int\xc3\xa9ntelo mientras es gratis')
 ----------------------------------------------------------------------
 Traceback (most recent call last):
@@ -340,11 +277,11 @@ Traceback (most recent call last):
     assert (buttonText == message)
 AssertionError: 
 -------------------- >> begin captured logging << --------------------
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/url {"url": "https://testcenter.duolingo.com/es", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e"}
+selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/2a3dd3f1-621e-459a-ab9f-771b51a4b134/url {"url": "https://testcenter.duolingo.com/es", "sessionId": "2a3dd3f1-621e-459a-ab9f-771b51a4b134"}
 selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element {"using": "xpath", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "value": "//div[@id=\"app\"]/section[1]/div[1]/div[1]/div[1]/div/div"}
+selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/2a3dd3f1-621e-459a-ab9f-771b51a4b134/element {"using": "xpath", "sessionId": "2a3dd3f1-621e-459a-ab9f-771b51a4b134", "value": "//div[@id=\"app\"]/section[1]/div[1]/div[1]/div[1]/div/div"}
 selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: GET http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element/1/text {"sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "id": "1"}
+selenium.webdriver.remote.remote_connection: DEBUG: GET http://127.0.0.1:4444/wd/hub/session/2a3dd3f1-621e-459a-ab9f-771b51a4b134/element/1/text {"sessionId": "2a3dd3f1-621e-459a-ab9f-771b51a4b134", "id": "1"}
 selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
 --------------------- >> end captured logging << ---------------------
 
@@ -358,18 +295,18 @@ Traceback (most recent call last):
     assert (buttonText == message)
 AssertionError: 
 -------------------- >> begin captured logging << --------------------
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/url {"url": "https://testcenter.duolingo.com/fr", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e"}
+selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/2a3dd3f1-621e-459a-ab9f-771b51a4b134/url {"url": "https://testcenter.duolingo.com/fr", "sessionId": "2a3dd3f1-621e-459a-ab9f-771b51a4b134"}
 selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element {"using": "xpath", "sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "value": "//div[@id=\"app\"]/section[1]/div[1]/div[1]/div[1]/div/div"}
+selenium.webdriver.remote.remote_connection: DEBUG: POST http://127.0.0.1:4444/wd/hub/session/2a3dd3f1-621e-459a-ab9f-771b51a4b134/element {"using": "xpath", "sessionId": "2a3dd3f1-621e-459a-ab9f-771b51a4b134", "value": "//div[@id=\"app\"]/section[1]/div[1]/div[1]/div[1]/div/div"}
 selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
-selenium.webdriver.remote.remote_connection: DEBUG: GET http://127.0.0.1:4444/wd/hub/session/7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e/element/2/text {"sessionId": "7bcf159a-88c4-4eb9-8f76-8e9ea8bd9c2e", "id": "2"}
+selenium.webdriver.remote.remote_connection: DEBUG: GET http://127.0.0.1:4444/wd/hub/session/2a3dd3f1-621e-459a-ab9f-771b51a4b134/element/2/text {"sessionId": "2a3dd3f1-621e-459a-ab9f-771b51a4b134", "id": "2"}
 selenium.webdriver.remote.remote_connection: DEBUG: Finished Request
 --------------------- >> end captured logging << ---------------------
 
 ----------------------------------------------------------------------
-Ran 32 tests in 120.478s
+Ran 32 tests in 130.125s
 
-FAILED (SKIP=13, errors=1, failures=2)
+FAILED (SKIP=13, failures=2)
 TESTING: chrome on WIN8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 __main__.test_page_title('en', 'https://testcenter.duolingo.com/', 'Duolingo Test Center') ... ok
@@ -406,7 +343,7 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 124.767s
+Ran 32 tests in 137.514s
 
 OK (SKIP=13)
 TESTING: internet explorer on WIN8
@@ -445,6 +382,6 @@ __main__.test_quit_test ... SKIP
 __main__.test_logout ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 135.709s
+Ran 32 tests in 146.728s
 
 OK (SKIP=13)
