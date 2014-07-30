@@ -281,6 +281,31 @@ def test_take_real_test():
     test_url = "https://testcenter.duolingo.com/test"
     assert (new_url == test_url)
 
+# Test quit menu options -- 2
+# Clicking quit, then cancel returns to sample questions
+def test_quit_cancel():
+    # Start exam
+    test_start_sample()
+
+    driver.find_element_by_class_name("leave-exam").click()
+    # Click cancel to return to test
+    driver.find_element_by_xpath("//button[2]").click()
+    new_url = driver.current_url
+    assert (new_url == testcenter_url + "sample")
+
+# Clicking quit, then ok returns "You left this test". Click ok and return to testcenter_url and camera off
+def test_quit_test():
+    # Start exam
+    test_start_sample()
+
+    driver.find_element_by_class_name("leave-exam").click()
+    # Click ok to quit
+    driver.find_element_by_xpath("/html/body/div[3]/div/div/button[2]").click()
+    # Click ok to leave test
+    driver.find_element_by_xpath("/html/body/div[3]/div/div/button").click()
+    new_url = driver.current_url
+    assert (new_url == testcenter_url)
+
 # Make sure a user can properly logout of Testcenter by hovering over his/her username
 # The user should be taken back to the Testcenter front page
 def test_logout():
