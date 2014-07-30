@@ -176,7 +176,6 @@ def test_quit_sample_splash():
     quit_button = driver.find_element_by_class_name("left")
     quit_button.click()
     new_url = driver.current_url
-    print "NEW URL: " + new_url
     assert (new_url == testcenter_url)
 
 # Clicking start button @ sample questions begins listen challenge
@@ -256,6 +255,31 @@ def test_dropdown_module():
     complete_message = driver.find_element_by_tag_name('h2').text.strip()
     expected_message = "Sample questions complete!"
     assert (complete_message == expected_message)
+
+# Test options post-completion -- 2
+# Clicking back to home button @ Complete returns to testcenter_url
+def test_back_to_home():
+    back_to_home = driver.find_element_by_class_name("left")
+    back_to_home.click()
+    new_url = driver.current_url
+    assert (new_url == testcenter_url)
+
+# Clicking take test button @ Complete starts test
+def test_take_real_test():
+    # Take the test all over again
+    test_start_sample()
+    test_listen_module()
+    test_speak_module()
+    test_vocab_module()
+    test_dropdown_module()
+
+    # Make sure we end up on the real test page
+    real_test = driver.find_element_by_class_name("right")
+    real_test.click()
+    new_url = driver.current_url
+    print "NEW URL: " + new_url
+    test_url = "https://testcenter.duolingo.com/test"
+    assert (new_url == test_url)
 
 # Make sure a user can properly logout of Testcenter by hovering over his/her username
 # The user should be taken back to the Testcenter front page
