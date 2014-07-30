@@ -22,8 +22,8 @@ languages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
 
 # Duolingo account credentials for the site. 
 # Change them to the appropriate values, but don't check them in!
-loginID = "maxtp"
-loginPass = "rage$duo7"
+loginID = ""
+loginPass = ""
 
 # Command-line arguments for the browser and platform respectively
 # Supported browsers: "internet explorer", "firefox", "safari", and "chrome"
@@ -316,7 +316,7 @@ def test_take_real_test():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
 
-    # Take the test all over again
+    # Take the sample test all over again
     test_start_sample()
     test_listen_module()
     test_speak_module()
@@ -336,7 +336,7 @@ def test_quit_cancel():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
 
-    # Start exam
+    # Start sample exam
     test_start_sample()
 
     driver.find_element_by_class_name("leave-exam").click()
@@ -352,7 +352,7 @@ def test_quit_test():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
 
-    # Start exam
+    # Start sample exam
     test_start_sample()
 
     driver.find_element_by_class_name("leave-exam").click()
@@ -394,4 +394,5 @@ if __name__ == "__main__":
     # The unit testing framework takes over the command line arguments, so removing ours to not cause trouble
     del sys.argv[1:]
 
+    # Star the unit tests
     nose.runmodule(argv=[__file__, '-v'])
