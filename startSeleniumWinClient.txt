@@ -1,0 +1,4 @@
+Run the following command, substituting in the address of the Selenium Grid hub. Note that the Chrome and IE drivers need to be in the same directory, or the full path to each needs to be updated.
+
+java -jar selenium-server-standalone-2.42.2.jar -role node -hub http://192.168.1.6:4444 -ensureCleanSession -Dwebdriver.chrome.driver=chromedriver.exe -Dwebdriver.ie.driver=IEDriverServer.exe
+
