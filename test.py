@@ -138,8 +138,8 @@ def test_valid_login():
 
 # Make sure that the sample test button is available to authenticated Chrome users
 def test_chrome_sample_test_visible():
-    # This feature only works for the Chrome browser
-    if (driver.capabilities['browserName'] != "chrome"):
+    # This feature only works for the Chrome browser with a physical camera available
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
 
     try:
@@ -151,8 +151,7 @@ def test_chrome_sample_test_visible():
 
 # Make sure that the certified test button is available to authenticated Chrome users
 def test_chrome_certified_test_visible():
-    # This feature only works for the Chrome browser
-    if (driver.capabilities['browserName'] != "chrome"):
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
 
     try:
@@ -164,6 +163,9 @@ def test_chrome_certified_test_visible():
 
 # Clicking sample button @ testcenter_url starts sample questions
 def test_sample_questions_works():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     driver.get(testcenter_url)
     sample_button = driver.find_element_by_class_name("sample-questions").click()
     sample_url = driver.current_url
@@ -172,6 +174,9 @@ def test_sample_questions_works():
 # Test splash page options -- 2
 # Clicking quit button @ sample questions returns to testcenter_url
 def test_quit_sample_splash():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     driver.get(testcenter_url + "sample")
     quit_button = driver.find_element_by_class_name("left")
     quit_button.click()
@@ -180,6 +185,9 @@ def test_quit_sample_splash():
 
 # Clicking start button @ sample questions begins listen challenge
 def test_start_sample():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     driver.get(testcenter_url + "sample")
     start_button = driver.find_element_by_class_name("right")
     start_button.click()
@@ -192,6 +200,9 @@ def test_start_sample():
 # Test listening module
 # Type "She is not old." and press enter, advance to speak challenge
 def test_listen_module():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     driver.get(testcenter_url + "sample")
     start_button = driver.find_element_by_class_name("right")
     start_button.click()
@@ -207,6 +218,9 @@ def test_listen_module():
 # Test speech module
 # Click record-button, wait 2 seconds, click stop-button, click class="btn right btn-lg btn-primary btn-submit btn-success"
 def test_speak_module():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     # Start recording voice
     mic = driver.find_element_by_id("record-button")
     mic.click()
@@ -225,6 +239,9 @@ def test_speak_module():
 # Test vocab module
 # Click the buttons that say [fine good easy bag walk both may], click submit button
 def test_vocab_module():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     vocab_buttons = driver.find_elements_by_class_name("btn")
     vocab_options = ["fine", "good", "easy", "bag", "walk", "both", "may"]
     for button in vocab_buttons:
@@ -237,6 +254,9 @@ def test_vocab_module():
 # Test dropdown module
 # [has were was became swam] & submit -- class="step bg-certificate" heading2 should say "Sample questions complete!"
 def test_dropdown_module():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     # Find all of the dropdown word selectors
     select_1 = driver.find_element_by_xpath('//*[@id="dropout-f84b22d51ba03e7c198a1dd22ad7a88e"]/p/label[1]/select')
     select_2 = driver.find_element_by_xpath('//*[@id="dropout-f84b22d51ba03e7c198a1dd22ad7a88e"]/p/label[2]/select')
@@ -259,6 +279,9 @@ def test_dropdown_module():
 # Test options post-completion -- 2
 # Clicking back to home button @ Complete returns to testcenter_url
 def test_back_to_home():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     back_to_home = driver.find_element_by_class_name("left")
     back_to_home.click()
     new_url = driver.current_url
@@ -266,6 +289,9 @@ def test_back_to_home():
 
 # Clicking take test button @ Complete starts test
 def test_take_real_test():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     # Take the test all over again
     test_start_sample()
     test_listen_module()
@@ -284,6 +310,9 @@ def test_take_real_test():
 # Test quit menu options -- 2
 # Clicking quit, then cancel returns to sample questions
 def test_quit_cancel():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     # Start exam
     test_start_sample()
 
@@ -295,6 +324,9 @@ def test_quit_cancel():
 
 # Clicking quit, then ok returns "You left this test". Click ok and return to testcenter_url and camera off
 def test_quit_test():
+    if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
+        raise SkipTest
+
     # Start exam
     test_start_sample()
 
