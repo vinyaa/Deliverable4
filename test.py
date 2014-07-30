@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
 from nose.plugins.skip import Skip, SkipTest
 import unittest
 import sys
@@ -231,6 +232,30 @@ def test_vocab_module():
         my_text = button.text.strip()
         if my_text in vocab_options:
             button.click()
+    submit = driver.find_element_by_xpath("//footer/button[1]")
+    submit.click()
+
+# Test dropdown module
+# [has were was became swam] & submit -- class="step bg-certificate" heading2 should say "Sample questions complete!"
+def test_dropdown_module():
+    # Find all of the dropdown word selectors
+    select_1 = driver.find_element_by_xpath('//*[@id="dropout-f84b22d51ba03e7c198a1dd22ad7a88e"]/p/label[1]/select')
+    select_2 = driver.find_element_by_xpath('//*[@id="dropout-f84b22d51ba03e7c198a1dd22ad7a88e"]/p/label[2]/select')
+    select_3 = driver.find_element_by_xpath('//*[@id="dropout-f84b22d51ba03e7c198a1dd22ad7a88e"]/p/label[3]/select')
+    select_4 = driver.find_element_by_xpath('//*[@id="dropout-f84b22d51ba03e7c198a1dd22ad7a88e"]/p/label[4]/select')
+    select_5 = driver.find_element_by_xpath('//*[@id="dropout-f84b22d51ba03e7c198a1dd22ad7a88e"]/p/label[5]/select')
+    
+    Select(select_1).select_by_value("has")
+    Select(select_2).select_by_value("were")
+    Select(select_3).select_by_value("was")
+    Select(select_4).select_by_value("became")
+    Select(select_5).select_by_value("swam")
+    submit = driver.find_element_by_xpath("//footer/button[1]")
+    submit.click()
+
+    complete_message = driver.find_element_by_tag_name('h2').text.strip()
+    expected_message = "Sample questions complete!"
+    assert (complete_message == expected_message)
 
 # Make sure a user can properly logout of Testcenter by hovering over his/her username
 # The user should be taken back to the Testcenter front page
