@@ -6,16 +6,17 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from nose.plugins.skip import Skip, SkipTest
 import unittest
 import sys
 import nose
 import time
 
-testcenter_url = 'http://testcenter.duolingo.com/'
+testcenter_url = 'https://testcenter.duolingo.com/'
 languages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
-loginID = ""
-loginPass = ""
+loginID = "maxtp"
+loginPass = "rage$duolingo"
 
 browserName = sys.argv[1]
 systemPlatform = sys.argv[2]
@@ -134,7 +135,7 @@ def test_valid_login():
     except:
         assert False
 
-# Make sure that the sample test option is available to authenticated Chrome users
+# Make sure that the sample test button is available to authenticated Chrome users
 def test_chrome_sample_test_visible():
     # This feature only works for the Chrome browser
     if (driver.capabilities['browserName'] != "chrome"):
@@ -142,12 +143,12 @@ def test_chrome_sample_test_visible():
 
     try:
         # Make sure the sample test option is available for a Chrome user
-        driver.find_element_by_class_name('sample-questions')
-        assert True
+        sample_label = driver.find_element_by_class_name('sample-questions').text.strip()
+        assert (sample_label == "Sample Questions")
     except:
         assert False
 
-# Make sure that the certified test option is available to authenticated Chrome users
+# Make sure that the certified test button is available to authenticated Chrome users
 def test_chrome_certified_test_visible():
     # This feature only works for the Chrome browser
     if (driver.capabilities['browserName'] != "chrome"):
@@ -160,6 +161,75 @@ def test_chrome_certified_test_visible():
     except:
         assert False
 
+# Clicking sample button @ testcenter_url starts sample questions
+def test_sample_questions_works():
+    driver.get(testcenter_url)
+    sample_button = driver.find_element_by_class_name("sample-questions").click()
+    sample_url = driver.current_url
+    assert (sample_url == "https://testcenter.duolingo.com/sample")
+
+# Test splash page options -- 2
+# Clicking quit button @ sample questions returns to testcenter_url
+def test_quit_sample_splash():
+    driver.get(testcenter_url + "sample")
+    quit_button = driver.find_element_by_class_name("left")
+    quit_button.click()
+    new_url = driver.current_url
+    print "NEW URL: " + new_url
+    assert (new_url == testcenter_url)
+
+# Clicking start button @ sample questions begins listen challenge
+def test_start_sample():
+    driver.get(testcenter_url + "sample")
+    start_button = driver.find_element_by_class_name("right")
+    start_button.click()
+    try: 
+        driver.find_element_by_class_name("listen-challenge")
+        assert True
+    except:
+        assert False
+
+# Test listening module
+# Type "She is not old." and press enter, advance to speak challenge
+def test_listen_module():
+    driver.get(testcenter_url + "sample")
+    start_button = driver.find_element_by_class_name("right")
+    start_button.click()
+    listening = driver.find_element_by_xpath("//div[@id ='challenge']/div[1]/div[2]/input[1]")
+    listening.send_keys("She is not old")
+    listening.send_keys(Keys.RETURN)
+    try:
+        driver.find_element_by_class_name("speak-challenge")
+        assert True
+    except:
+        assert False
+
+# Test speech module
+# Click record-button, wait 2 seconds, click stop-button, click class="btn right btn-lg btn-primary btn-submit btn-success"
+def test_speak_module():
+    # Advance to the right module
+    driver.get(testcenter_url + "sample")
+    start_button = driver.find_element_by_class_name("right")
+    start_button.click()
+    listening = driver.find_element_by_xpath("//div[@id ='challenge']/div[1]/div[2]/input[1]")
+    listening.send_keys("She is not old")
+    listening.send_keys(Keys.RETURN)
+    
+    # Start test
+    mic = driver.find_element_by_id("record-button")
+    mic.click()
+    time.sleep(2)
+    stop = driver.find_element_by_id("stop-button")
+    stop.click()
+    submit = driver.find_element_by_xpath("//footer/button[1]")
+    submit.click()
+    try:
+        # Find a work on the vocab test (the next test) so that we know we have passed this one
+        driver.find_element_by_xpath("//*[contains(.,'both')]")
+        assert True
+    except:
+        assert False
+
 # Make sure a user can properly logout of Testcenter by hovering over his/her username
 # The user should be taken back to the Testcenter front page
 def test_logout():
@@ -167,6 +237,7 @@ def test_logout():
     if (driver.capabilities['browserName'] == "safari"):
         raise SkipTest
 
+    driver.get(testcenter_url)
     username = driver.find_element_by_class_name('name')
     hoverButton = ActionChains(driver).move_to_element(username)
     hoverButton.perform()

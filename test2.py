@@ -9,14 +9,14 @@ import time
 
 global testcenter_url
 testcenter_url = "https://testcenter.duolingo.com/"
-loginID = ""
-loginPass = ""
+loginID = "maxtp"
+loginPass = "rage$duolingo"
 
 class DuolingoTestCase(unittest.TestCase):
     
     def setUp(self):
         global driver
-        driver = webdriver.Firefox()
+        driver = webdriver.Chrome()
         driver.implicitly_wait(30)
         driver.maximize_window()
         
