@@ -14,11 +14,20 @@ import sys
 import nose
 import time
 
+# Primary Test Center address
 testcenter_url = 'https://testcenter.duolingo.com/'
-languages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
-loginID = "maxtp"
-loginPass = "rage$duolingo"
 
+# All of the supported languages in Test Center
+languages = ("en", "es", "fr", "de", "it", "pt", "ru", "hi", "hu", "tr")
+
+# Duolingo account credentials for the site. 
+# Change them to the appropriate values, but don't check them in!
+loginID = "maxtp"
+loginPass = "rage$duo7"
+
+# Command-line arguments for the browser and platform respectively
+# Supported browsers: "internet explorer", "firefox", "safari", and "chrome"
+# Supported platforms: MAC, VISTA, WIN8
 browserName = sys.argv[1]
 systemPlatform = sys.argv[2]
 
@@ -36,29 +45,32 @@ def setup_module():
 
 # Make sure that the page title is the same for each language.
 # This not only makes branding consistent, but is also a sanity
-# check that a page renders for every language.
+# check that a page renders for every supported language.
 def check_page_title(language, testcenter_url, title):
     driver.get(testcenter_url + language)
     assert (driver.title == title)
 
 # Generate an individual page title test for each language
+# The title of each page should be "Duolingo Test Center"
 def test_page_title():
     for language in languages:
         yield check_page_title, language, testcenter_url, "Duolingo Test Center"
 
-# Make sure that the primary action button is translated properly for the top 3 language markets
+# Generate tests to check that the primary action button is translated properly for the top 3 language markets
 def test_action_button_translation():
     topLanguages = languages[0:3]
     messages = ("Try it while it's free", "Inténtelo mientras es gratis", "Essaie pendant que c'est gratuit")
     for topLanguage, message in zip(topLanguages, messages):
         yield check_action_button_translation, topLanguage, testcenter_url, message
 
+# The actual test for the top 3 language translations
 def check_action_button_translation(language, testcenter_url, message):
     driver.get(testcenter_url + language)
     buttonText = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[1]/div[1]/div/div').text.encode('utf8')
     assert (buttonText == message)
 
-# Make sure that the users are taken to the Google play page and are presented the installation for the Testcenter app
+# Make sure that the users are taken to the Google play page and are presented the installation button for 
+# the Test Center Android application
 def test_android_app_link():
     driver.get(testcenter_url + 'en')
     androidLink = driver.find_element_by_xpath('//div[@id="app"]/section[1]/div[1]/div[1]/div[1]/div/ul/li[1]/a').get_attribute('href')
@@ -66,8 +78,10 @@ def test_android_app_link():
     installButton = driver.find_element_by_xpath('//*[@id="body-content"]/div[1]/div[1]/div[2]/div[4]/span/button/span[2]').text
     assert (installButton == "Install")
 
+# Hover over the button labeled "Try it while it's free", click the link for the Test Center Chrome web application,
+# If the browser is Chrome, an unauthenticated user should get a dialog to create an account
+# If the browser is anything else, the user should be taken to a page where he/she can download Chrome
 def test_chrome_app_link():
-
     # The web driver for Safari does not yet support the move_to_element method so this test will not function properly
     if (driver.capabilities['browserName'] == "safari"):
         raise SkipTest
@@ -109,6 +123,8 @@ def test_invalid_login():
     errorText = driver.find_element_by_xpath('/html/body/div[3]/div/div/p').text.strip()
     assert (errorText == "ERROR: Failed login")
 
+# If the user clicks on the "Forgot password" link, the user should be redirected to a page where
+# the password can be reset by providing an e-mail address
 def test_forgotten_password():
     driver.get(testcenter_url + 'en')
     driver.find_element_by_id('sign-in-btn').click()
@@ -121,6 +137,9 @@ def test_forgotten_password():
     except:
         assert False
 
+# Login with a previously-known valid username and password
+# After a sucessful login, the user should have a hover menu in the top right corner of the screen
+# labeled with their username
 def test_valid_login():
     driver.get(testcenter_url + 'en')
     driver.find_element_by_id('sign-in-btn').click()
@@ -135,6 +154,11 @@ def test_valid_login():
         assert (username == loginID.lower())
     except:
         assert False
+
+# 
+# Note that the following sequence of tests are only supported in the Chrome browser. 
+# These tests will be skipped for other platforms
+# 
 
 # Make sure that the sample test button is available to authenticated Chrome users
 def test_chrome_sample_test_visible():
@@ -155,13 +179,13 @@ def test_chrome_certified_test_visible():
         raise SkipTest
 
     try:
-        # Make sure the certified test option is available for a Chrome user
+        # The certified test option should be available 
         driver.find_element_by_class_name('certified-exam')
         assert True
     except:
         assert False
 
-# Clicking sample button @ testcenter_url starts sample questions
+# Clicking the sample questions button should start sample questions by redirecting to the "sample" page
 def test_sample_questions_works():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -171,8 +195,7 @@ def test_sample_questions_works():
     sample_url = driver.current_url
     assert (sample_url == "https://testcenter.duolingo.com/sample")
 
-# Test splash page options -- 2
-# Clicking quit button @ sample questions returns to testcenter_url
+# Clicking quit button on the sample questions page should return the user to the main Test Center page
 def test_quit_sample_splash():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -183,7 +206,7 @@ def test_quit_sample_splash():
     new_url = driver.current_url
     assert (new_url == testcenter_url)
 
-# Clicking start button @ sample questions begins listen challenge
+# Clicking start button on the sample questions page starts the language listening challenge
 def test_start_sample():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -197,8 +220,8 @@ def test_start_sample():
     except:
         assert False
 
-# Test listening module
-# Type "She is not old." and press enter, advance to speak challenge
+# During the listening challenge, the user types what is heard from a voice recording
+# To test this module,  type "She is not old.", press enter, and advance to the speaking challenge
 def test_listen_module():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -215,8 +238,9 @@ def test_listen_module():
     except:
         assert False
 
-# Test speech module
-# Click record-button, wait 2 seconds, click stop-button, click class="btn right btn-lg btn-primary btn-submit btn-success"
+# During the speaking challenge, the user is prompted to speak the phrase displayed on the screen
+# To test this module,  click the  record-button, wait 2 seconds, click the stop button, and submit the answers
+# This should take you to the next challenge: vocabulary selection
 def test_speak_module():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -236,8 +260,8 @@ def test_speak_module():
     except:
         assert False
 
-# Test vocab module
-# Click the buttons that say [fine good easy bag walk both may], click submit button
+# The user is asked to select the valid English words out of a set of labeled buttons
+# To test this module, click the buttons that say [fine good easy bag walk both may], and click the submit button
 def test_vocab_module():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -251,8 +275,9 @@ def test_vocab_module():
     submit = driver.find_element_by_xpath("//footer/button[1]")
     submit.click()
 
-# Test dropdown module
-# [has were was became swam] & submit -- class="step bg-certificate" heading2 should say "Sample questions complete!"
+# The dropdown sentence selection challenge presents the user with an incomplete sentence and the user must select the most
+# valid words for the particular context from a dropdown menu
+# To test this module, select [has were was became swam] and submit. The next page should display "Sample questions complete!"
 def test_dropdown_module():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -276,8 +301,7 @@ def test_dropdown_module():
     expected_message = "Sample questions complete!"
     assert (complete_message == expected_message)
 
-# Test options post-completion -- 2
-# Clicking back to home button @ Complete returns to testcenter_url
+# Clicking the back to home button when the sample test is complete should return the user to the main Test Center page
 def test_back_to_home():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -287,7 +311,7 @@ def test_back_to_home():
     new_url = driver.current_url
     assert (new_url == testcenter_url)
 
-# Clicking take test button @ Complete starts test
+# Clicking the take test button after the simple test is complete takes the user to the actual certification exam
 def test_take_real_test():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -303,12 +327,11 @@ def test_take_real_test():
     real_test = driver.find_element_by_class_name("right")
     real_test.click()
     new_url = driver.current_url
-    print "NEW URL: " + new_url
     test_url = "https://testcenter.duolingo.com/test"
     assert (new_url == test_url)
 
-# Test quit menu options -- 2
-# Clicking quit, then cancel returns to sample questions
+# Clicking the quit button (the (X) in the upper-right corner of the page) during the sample exam, 
+# and then clicking cancel returns the user to the sample questions
 def test_quit_cancel():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -323,6 +346,8 @@ def test_quit_cancel():
     assert (new_url == testcenter_url + "sample")
 
 # Clicking quit, then ok returns "You left this test". Click ok and return to testcenter_url and camera off
+# Clicking the quit button during the sample exam, and then clicking ok displays "You left this test"
+# to the user and redirects him/her to the main Test Center page
 def test_quit_test():
     if (driver.capabilities['browserName'] != "chrome" or driver.capabilities['platform'] != "MAC"):
         raise SkipTest
@@ -339,7 +364,7 @@ def test_quit_test():
     assert (new_url == testcenter_url)
 
 # Make sure a user can properly logout of Testcenter by hovering over his/her username
-# The user should be taken back to the Testcenter front page
+# The user should be taken back to the Test Center front page
 def test_logout():
     # The web driver for Safari does not yet support the move_to_element method so this test will not function properly
     if (driver.capabilities['browserName'] == "safari"):
@@ -357,6 +382,7 @@ def test_logout():
     except:
         assert False
 
+# Close the browser session
 def teardown_module():
     driver.quit()
 
@@ -365,7 +391,7 @@ if __name__ == "__main__":
     print "TESTING: " + browserName + " on " + systemPlatform
     print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
-    # The unit testing framework takes over the command line arguments, so removing ours to no cause trouble
+    # The unit testing framework takes over the command line arguments, so removing ours to not cause trouble
     del sys.argv[1:]
 
     nose.runmodule(argv=[__file__, '-v'])
